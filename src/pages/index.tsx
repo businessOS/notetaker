@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 import { useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
@@ -70,61 +74,84 @@ const Content: React.FC = () => {
     },
   });
 
-  return (
-    <div className="mx-5 mt-5 grid grid-cols-4 gap-2">
-      <div className="px-2">
-        <ul className="menu rounded-box w-56 bg-base-100 p-2">
-          {topics?.map((topic) => (
-            <li key={topic.id}>
-              <a
-                href="#"
-                onClick={(evt) => {
-                  evt.preventDefault();
-                  setSelectedTopic(topic);
-                }}
-              >
-                {topic.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <div className="divider"></div>
-        <input
-          type="text"
-          placeholder="New Topic"
-          className="input-bordered input input-sm w-full"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              createTopic.mutate({
-                title: e.currentTarget.value,
-              });
-              e.currentTarget.value = "";
-            }
-          }}
-        />
-      </div>
-      <div className="col-span-3">
-        <div>
-          {notes?.map((note) => (
-            <div key={note.id} className="mt-5">
-              <NoteCard
-                note={note}
-                onDelete={() => void deleteNote.mutate({ id: note.id })}
-              />
-            </div>
-          ))}
-        </div>
 
-        <NoteEditor
-          onSave={({ title, content }) => {
-            void createNote.mutate({
-              title,
-              content,
-              topicId: selectedTopic?.id ?? "",
-            });
-          }}
-        />
+  return (
+    sessionData?.user.name ?
+      <div className="mx-5 mt-5 grid grid-cols-4 gap-2">
+        <div className="px-2">
+          <ul className="menu rounded-box w-56 bg-base-100 p-2">
+            {topics?.map((topic) => (
+              <li key={topic.id}>
+                <a
+                  href="#"
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    setSelectedTopic(topic);
+                  }}
+                >
+                  {topic.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="divider"></div>
+          <input
+            type="text"
+            placeholder="New Topic"
+            className="input-bordered input input-sm w-full"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                createTopic.mutate({
+                  title: e.currentTarget.value,
+                });
+                e.currentTarget.value = "";
+              }
+            }}
+          />
+        </div>
+        <div className="col-span-3">
+          <div>
+            {notes?.map((note) => (
+              <div key={note.id} className="mt-5">
+                <NoteCard
+                  note={note}
+                  onDelete={() => void deleteNote.mutate({ id: note.id })}
+                />
+              </div>
+            ))}
+          </div>
+
+          <NoteEditor
+            onSave={({ title, content }) => {
+              void createNote.mutate({
+                title,
+                content,
+                topicId: selectedTopic?.id ?? "",
+              });
+            }}
+          />
+        </div>
       </div>
-    </div>
+      :
+      <div className="hero min-h-screen bg-base-200">
+        <div className="hero-content text-center">
+          <div className="max-w-lg">
+            <h1 className="text-5xl font-bold">Note taker</h1>
+            <p className="py-6">
+              This littel app was development using
+              This is a <span>
+                <a href="https://create.t3.gg/" className="hover:bg-blue-100 hover:ring-blue-500 hover:shadow-md group rounded-md p-2 bg-white ring-1 ring-slate-200 shadow-sm" > [T3 Stack]</a></span> project bootstrapped with `create-t3-app`.
+            </p>
+            <h1 className="text-5xl font-bold">Tecnology used</h1>
+            <div className="flex py-6 gap-2">
+              <div className="flex-none"><a href="https://nextjs.org" className="hover:bg-blue-100 hover:ring-blue-500 hover:shadow-md group rounded-md p-2 bg-white ring-1 ring-slate-200 shadow-sm m-5" >[Next.js]</a></div>
+              <div className="flex-none"><a href="https://next-auth.js.org" className="hover:bg-blue-100 hover:ring-blue-500 hover:shadow-md group rounded-md p-2 bg-white ring-1 ring-slate-200 shadow-sm" >[NextAuth.js]</a></div>
+              <div className="flex-none"><a href="https://prisma.io" className="hover:bg-blue-100 hover:ring-blue-500 hover:shadow-md group rounded-md p-2 bg-white ring-1 ring-slate-200 shadow-sm" >[Prisma]</a></div>
+              <div className="flex-none"><a href="https://tailwindcss.com" className="hover:bg-blue-100 hover:ring-blue-500 hover:shadow-md group rounded-md p-2 bg-white ring-1 ring-slate-200 shadow-sm" >[Tailwind CSS]</a></div>
+              <div className="flex-none"><a href="https://trpc.io" className="hover:bg-blue-100 hover:ring-blue-500 hover:shadow-md group rounded-md p-2 bg-white ring-1 ring-slate-200 shadow-sm" >[tRPC]</a></div>
+            </div>
+          </div>
+        </div >
+      </div >
   );
 };
