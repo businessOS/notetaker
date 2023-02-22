@@ -1,6 +1,10 @@
-# Note taker App
+# Create T3 App
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+
+# Getting an OAuth Client ID
+
+Here is how you get and [OAuth Client ID](https://scribehow.com/shared/Github_Workflow_to_create_OAuth_tokens__O_H4oeqRQzaubnFP_99aKg)
 
 ## What's next? How do I make an app with this?
 
