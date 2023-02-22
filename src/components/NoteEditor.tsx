@@ -37,7 +37,7 @@ export const NoteEditor = ({
           className="border border-gray-300"
         />
       </div>
-      <div className="card-actions justify-end">
+      <div className="card-actions justify-end px-8 pb-4">
         <button
           onClick={() => {
             onSave({
